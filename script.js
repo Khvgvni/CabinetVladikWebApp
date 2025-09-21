@@ -1,6 +1,6 @@
 // 📌 Настройки
-const BOT_TOKEN = "8325375947:AAHaYMwHdR3FyvPGP1QhHFsim6ptcNCfAXc";
-const CHAT_ID = "-1003014842866";
+const BOT_TOKEN = "BOT TOKEN HERE";
+const CHAT_ID = "-CHAT ID HERE";
 
 function openModal(id) {
   document.getElementById(id).style.display = "flex";
