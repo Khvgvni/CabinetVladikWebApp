@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cabinet App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Заставка -->
+  <div id="preloader">
+    <div class="loader">
+      <img src="Logo-removebg-preview.png" alt="logo">
+    </div>
+  </div>
+
+  <div class="app">
+    <!-- Лого -->
+    <div class="logo-container">
+      <img src="Logo-removebg-preview.png" alt="Cabinet Logo" class="logo">
+    </div>
+
+    <!-- Центральные кнопки -->
+    <div class="main-buttons">
+      <button onclick="openModal('bookTableModal')" class="glass-button">Забронировать стол</button>
+      <button onclick="openModal('taxiModal')" class="glass-button">Вызвать такси</button>
+      <button onclick="openModal('menuModal')" class="glass-button">Меню</button>
+      <button onclick="openModal('joinTeamModal')" class="glass-button">Хочу в команду</button>
+    </div>
+
+    <!-- Нижнее меню -->
+    <div class="bottom-nav">
+      <div class="nav-item" onclick="openModal('posterModal')">
+        <img src="https://img.icons8.com/ios-filled/50/ffffff/picture.png" alt="афиша">
+        <span>афиша</span>
+      </div>
+      <div class="nav-item" onclick="openModal('cardModal')">
+        <img src="https://img.icons8.com/ios-filled/50/ffffff/treasure-map.png" alt="карта">
+        <span>карта</span>
+      </div>
+      <div class="nav-item" onclick="openModal('giftModal')">
+        <img src="https://img.icons8.com/ios-filled/50/ffffff/gift.png" alt="подарки">
+        <span>подарки</span>
+      </div>
+      <div class="nav-item" onclick="openModal('profileModal')">
+        <img src="https://img.icons8.com/ios-filled/50/ffffff/user.png" alt="профиль">
+        <span>профиль</span>
+      </div>
+    </div>
+  </div>
+
+  <!--  Забронировать стол -->
+  <div id="bookTableModal" class="modal">
+    <div class="modal-content">
+      <h2> Забронировать стол</h2>
+      <form id="bookTableForm">
+        <input type="text" id="name" placeholder="Ваше ФИО" required>
+        <input type="tel" id="phone" placeholder="Ваш телефон" required>
+        <button type="submit" class="glass-button">Подтвердить</button>
+      </form>
+      <button class="glass-button" onclick="closeModal('bookTableModal')">Назад</button>
+    </div>
+  </div>
+
+  <!--  Такси -->
+  <div id="taxiModal" class="modal">
+    <div class="modal-content">
+      <h2> Вызвать такси</h2>
+      <form id="taxiForm">
+        <input type="text" id="taxiName" placeholder="Ваше ФИО" required>
+        <input type="tel" id="taxiPhone" placeholder="Ваш телефон" required>
+        <input type="text" id="taxiAddress" placeholder="Адрес откуда забрать" required>
+        <button type="submit" class="glass-button">Подтвердить</button>
+      </form>
+      <button class="glass-button" onclick="closeModal('taxiModal')">Назад</button>
+    </div>
+  </div>
+
+  <!--  Меню -->
+  <div id="menuModal" class="modal">
+    <div class="modal-content menu-scroll" id="menuContainer"></div>
+  </div>
+
+  <!--  Хочу в команду -->
+  <div id="joinTeamModal" class="modal">
+    <div class="modal-content">
+      <h2> Хочу в команду</h2>
+      <form id="joinTeamForm">
+        <input type="text" id="teamName" placeholder="Ваше ФИО" required>
+        <input type="tel" id="teamPhone" placeholder="Ваш телефон" required>
+        <input type="text" id="teamRole" placeholder="Желаемая должность" required>
+        <button type="submit" class="glass-button">Подтвердить</button>
+      </form>
+      <button class="glass-button" onclick="closeModal('joinTeamModal')">Назад</button>
+    </div>
+  </div>
+
+  <!--  Афиша -->
+  <div id="posterModal" class="modal">
+    <div class="modal-content menu-scroll">
+      <h2> Афиша</h2>
+      <img src="event1.png" class="menu-img" alt="Событие 1">
+      <img src="event2.png" class="menu-img" alt="Событие 2">
+      <button class="glass-button" onclick="closeModal('posterModal')">Назад</button>
+    </div>
+  </div>
+
+  <!--  Карта -->
+  <div id="cardModal" class="modal">
+    <div class="modal-content">
+      <h2> Ваша карта</h2>
+      <img src="card.png" class="menu-img" alt="Карта">
+      <button class="glass-button" onclick="closeModal('cardModal')">Назад</button>
+    </div>
+  </div>
+
+  <!--  Подарки -->
+  <div id="giftModal" class="modal">
+    <div class="modal-content">
+      <h2> Подарки и акции</h2>
+      <p>Информация об акциях появится здесь</p>
+      <button class="glass-button" onclick="closeModal('giftModal')">Назад</button>
+    </div>
+  </div>
+
+  <!--  Профиль -->
+  <div id="profileModal" class="modal">
+    <div class="modal-content">
+      <h2> Профиль</h2>
+      <p>ФИО: Иван Иванов</p>
+      <p>Телефон: +7 (999) 123-45-67</p>
+      <p>Почта: example@mail.ru</p>
+      <button class="glass-button" onclick="closeModal('profileModal')">Назад</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
