@@ -1,155 +1,239 @@
+/* ========= БАЗА ========= */
+:root{
+  /* высота нижней панели (десктоп/база) */
+  --nav-h: 88px;
+}
+
+*{ box-sizing: border-box; }
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-  background: url("Background.png") no-repeat center center fixed;
+  background: url("https://raw.githubusercontent.com/Khvgvni/CabinetWebApp/main/Background.png") no-repeat center center fixed;
   background-size: cover;
-  color: white;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  color: #fff;
+  text-align: center;
+
+  /* чтобы контент не прятался под нижней панелью */
+  padding-bottom: calc(var(--nav-h) + env(safe-area-inset-bottom, 0px));
 }
 
-.app {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100vh;
-}
-
-/* -------- Заставка -------- */
+/* ---------- Прелоадер ---------- */
 #preloader {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
+  inset: 0;
   background: #000;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 2000;
+  z-index: 9999;
   transition: opacity 1s ease;
 }
+#preloader .loader img {
+  width: 150px;
+  animation: pulse 2s infinite;
+}
 #preloader.hide { opacity: 0; pointer-events: none; }
-.loader img {
-  width: 220px;
-  opacity: 0;
-  animation: fadeInLogo 2.5s ease forwards, shine 3s ease-in-out infinite;
-  filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8));
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.85; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
-/* Анимации */
-@keyframes fadeInLogo {
-  0% { opacity: 0; transform: scale(0.8); filter: blur(8px); }
-  70% { opacity: 1; transform: scale(1.05); filter: blur(0); }
-  100% { opacity: 1; transform: scale(1); }
+/* ---------- Лого ---------- */
+.logo-container { 
+  margin: 48px 0 28px 0;
 }
-@keyframes shine {
-  0% { filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8)); }
-  50% { filter: drop-shadow(0 0 30px rgba(255, 215, 0, 1)); }
-  100% { filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8)); }
+.logo { 
+  width: 300px; /* десктопная ширина */
+  max-width: 90vw; /* не вылезет на узких экранах */
 }
 
-/* -------- Лого -------- */
-.logo-container { text-align: center; margin-top: 15px; }
-.logo { width: 160px; }
-
-/* -------- Центральные кнопки -------- */
+/* ---------- Главные кнопки ---------- */
 .main-buttons {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  padding-bottom: 60px;
+  gap: 18px;
+  margin: 0 24px 24px;
 }
-.glass-button {
-  width: 80%;
-  max-width: 300px;
-  padding: 15px;
-  border-radius: 15px;
-  border: 1px solid rgba(212,175,55,0.6);
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px);
-  color: #d4af37;
-  font-size: 16px;
-  font-weight: bold;
+.glass-button,
+.bottom-nav button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 215, 0, 0.55);
+  border-radius: 20px;
+  color: #ffd700;
+  font-weight: 800;
+  backdrop-filter: blur(10px);
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-}
-.glass-button:hover {
-  background: rgba(212,175,55,0.15);
-  box-shadow: 0 0 20px rgba(212,175,55,0.8);
-  transform: translateY(-2px);
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+  box-shadow: 0 0 0 rgba(255, 215, 0, 0);
 }
 
-/* -------- Нижнее меню -------- */
+/* большие красивые кнопки, но с ограничением по ширине */
+.glass-button{
+  width: min(92vw, 520px);
+  margin: 0 auto;
+  padding: 16px 22px;
+  font-size: 22px;
+}
+.glass-button:hover{ transform: scale(1.03); box-shadow: 0 0 14px rgba(255,215,0,.55); }
+.glass-button:active{ transform: scale(.97); box-shadow: 0 0 8px rgba(255,215,0,.4); }
+
+/* ---------- Нижнее меню ---------- */
 .bottom-nav {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  height: var(--nav-h);
   display: flex;
-  justify-content: space-around;
   align-items: center;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(12px);
-  padding: 10px 0;
-  border-top: 1px solid rgba(212,175,55,0.3);
+  gap: 12px;
+  padding: 12px clamp(10px, 3vw, 24px) calc(12px + env(safe-area-inset-bottom, 0px));
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(10px);
 }
-.nav-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: white;
-  font-size: 12px;
-  cursor: pointer;
-  transition: 0.3s;
+.bottom-nav button{
+  flex: 1;
+  min-width: 0; /* чтобы текст переносился, а не ломал сетку */
+  padding: 12px 0;
+  font-size: 18px;
+  border-radius: 16px;
 }
-.nav-item img {
-  width: 26px; height: 26px; margin-bottom: 4px; opacity: 0.9;
-}
-.nav-item.active { color: #d4af37; }
-.nav-item.active img { filter: drop-shadow(0 0 6px #d4af37); opacity: 1; }
+.bottom-nav button:hover{ transform: translateY(-1px); box-shadow: 0 0 12px rgba(255,215,0,.45); }
+.bottom-nav button:active{ transform: translateY(0); box-shadow: 0 0 6px rgba(255,215,0,.35); }
 
-/* -------- Модалки -------- */
+/* ---------- Модалки ---------- */
 .modal {
   display: none;
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
+  inset: 0;
   background: rgba(0,0,0,0.8);
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 9998;
+  animation: fadeInBg .25s ease forwards;
 }
+@keyframes fadeInBg {
+  from{ background: rgba(0,0,0,0); }
+  to  { background: rgba(0,0,0,0.8); }
+}
+
 .modal-content {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,215,0,.5);
   border-radius: 20px;
-  padding: 20px;
-  width: 90%;
-  max-width: 500px;
-  box-shadow: 0 0 20px rgba(212,175,55,0.5);
+  width: min(92vw, 520px);
+  color: #fff;
   backdrop-filter: blur(15px);
-  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  max-height: 82dvh; /* динамическая высота для мобильных */
+  opacity: 0;
+  transform: translateY(40px);
+  animation: slideUp .35s ease forwards;
 }
-.modal-content h2 { margin-bottom: 20px; color: #d4af37; }
-input {
-  display: block; width: 90%; margin: 10px auto;
-  padding: 12px; border-radius: 12px;
-  border: 1px solid rgba(212,175,55,0.3);
-  background: rgba(0,0,0,0.4);
-  color: white; font-size: 16px;
+@keyframes slideUp {
+  from{ opacity: 0; transform: translateY(40px); }
+  to  { opacity: 1; transform: translateY(0); }
 }
-input:focus {
+
+.modal-content h2{
+  color:#ffd700;
+  margin: 18px 0 10px;
+  font-size: 24px;
+}
+.modal-body{
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 16px 12px;
+}
+.modal-footer{
+  padding: 14px 16px 16px;
+  border-top: 1px solid rgba(255,215,0,.3);
+  background: rgba(0,0,0,.25);
+}
+.modal-footer .glass-button{ width: 100%; }
+
+/* ---------- Поля форм ---------- */
+input[type="text"],
+input[type="tel"],
+input[type="email"]{
+  width: 100%;
+  padding: 14px 16px;
+  margin: 10px 0;
+  border-radius: 12px;
+  border: 1px solid rgba(255,215,0,.4);
+  background: rgba(255,255,255,.1);
+  color: #fff;
+  font-size: 16px;
+  backdrop-filter: blur(8px);
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="email"]:focus{
   outline: none;
-  border-color: #d4af37;
-  box-shadow: 0 0 10px rgba(212,175,55,0.5);
+  border-color: #ffd700;
+  box-shadow: 0 0 10px rgba(255,215,0,.6);
 }
 
-/* Секция меню / афиши */
-.menu-scroll {
-  display: flex; flex-direction: column; align-items: center;
-  gap: 20px; padding: 10px; overflow-y: auto; max-height: 75vh;
-}
-.menu-img {
-  max-width: 95%;
-  border-radius: 15px;
-  box-shadow: 0 0 20px rgba(212,175,55,0.5);
+/* скролл в модалках */
+.modal-body::-webkit-scrollbar{ width: 6px; }
+.modal-body::-webkit-scrollbar-thumb{
+  background: rgba(255,215,0,.6);
+  border-radius: 6px;
 }
 
+/* изображения в модалках/меню */
+.menu-img{
+  width: 100%;
+  margin: 10px 0;
+  border-radius: 10px;
+}
+
+/* ========= МОБИЛЬНАЯ ТОЧНАЯ НАСТРОЙКА =========
+   Делает расположение как на десктопе, но чтобы
+   точно влазили все 4 кнопки и нижняя панель. */
+@media (max-width: 480px){
+  :root{ --nav-h: 80px; } /* панель ниже, но не громоздкая */
+
+  .logo{
+    /* аккуратное масштабирование лого */
+    width: clamp(170px, 48vw, 220px);
+  }
+  .logo-container{
+    margin: 28px 0 16px 0;
+  }
+
+  .main-buttons{
+    gap: 14px;
+    margin: 0 4vw 14px;
+  }
+  .glass-button{
+    /* большие, но точно влазят */
+    width: 92vw;
+    max-width: none;
+    font-size: clamp(18px, 2.3vh, 22px);
+    padding: clamp(12px, 2.6vh, 16px) 16px;
+    border-radius: 18px;
+  }
+
+  .bottom-nav{
+    gap: 3vw;
+    padding: 10px 4vw calc(10px + env(safe-area-inset-bottom, 0px));
+    height: var(--nav-h);
+  }
+  .bottom-nav button{
+    font-size: clamp(15px, 2vh, 18px);
+    padding: 10px 0;
+    border-radius: 14px;
+  }
+
+  .modal-content{
+    width: 94vw;
+    max-height: 82dvh;
+  }
+  .modal-content h2{ font-size: clamp(18px, 2.5vh, 22px); }
+  .modal-body{ padding: 8px 12px 10px; }
+}
