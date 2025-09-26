@@ -1,20 +1,35 @@
 // ---------- Управление модалками ----------
 function openModal(id) {
-  document.getElementById(id).style.display = "flex";
+  const modal = document.getElementById(id);
+  if (!modal) return;
+
+  modal.style.display = "flex";
+
+  // Перезапуск анимации контента
+  const content = modal.querySelector(".modal-content");
+  if (content) {
+    content.style.animation = "none"; // сброс анимации
+    void content.offsetHeight;        // форсируем reflow
+    content.style.animation = "";     // возвращаем анимацию
+  }
 }
+
 function closeModal(id) {
-  document.getElementById(id).style.display = "none";
+  const modal = document.getElementById(id);
+  if (!modal) return;
+
+  modal.style.display = "none";
 }
 
 // ---------- Динамическая генерация меню ----------
 const menuImages = [
-  "https://raw.githubusercontent.com/Khvgvni/CabinetWebApp/main/menu1.png",
-  "https://raw.githubusercontent.com/Khvgvni/CabinetWebApp/main/menu2.png",
-  "https://raw.githubusercontent.com/Khvgvni/CabinetWebApp/main/menu3.png",
-  "https://raw.githubusercontent.com/Khvgvni/CabinetWebApp/main/menu4.png",
-  "https://raw.githubusercontent.com/Khvgvni/CabinetWebApp/main/menu5.png",
-  "https://raw.githubusercontent.com/Khvgvni/CabinetWebApp/main/menu6.png",
-  "https://raw.githubusercontent.com/Khvgvni/CabinetWebApp/main/menu7.png"
+  "https://raw.githubusercontent.com/Khvgvni/CabinetVladikWebApp/main/menu1.png",
+  "https://raw.githubusercontent.com/Khvgvni/CabinetVladikWebApp/main/menu2.png",
+  "https://raw.githubusercontent.com/Khvgvni/CabinetVladikWebApp/main/menu3.png",
+  "https://raw.githubusercontent.com/Khvgvni/CabinetVladikWebApp/main/menu4.png",
+  "https://raw.githubusercontent.com/Khvgvni/CabinetVladikWebApp/main/menu5.png",
+  "https://raw.githubusercontent.com/Khvgvni/CabinetVladikWebApp/main/menu6.png",
+  "https://raw.githubusercontent.com/Khvgvni/CabinetVladikWebApp/main/menu7.png"
 ];
 
 function renderMenu() {
