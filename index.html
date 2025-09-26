@@ -3,138 +3,158 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cabinet App</title>
+  <title>Cabinet Club</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <!-- Заставка -->
   <div id="preloader">
     <div class="loader">
-      <img src="Logo-removebg-preview.png" alt="logo">
+      <img src="https://raw.githubusercontent.com/Khvgvni/CabinetWebApp/main/Logo-removebg-preview.png" alt="logo">
     </div>
   </div>
 
-  <div class="app">
-    <!-- Лого -->
-    <div class="logo-container">
-      <img src="Logo-removebg-preview.png" alt="Cabinet Logo" class="logo">
-    </div>
-
-    <!-- Центральные кнопки -->
-    <div class="main-buttons">
-      <button onclick="openModal('bookTableModal')" class="glass-button">Забронировать стол</button>
-      <button onclick="openModal('taxiModal')" class="glass-button">Вызвать такси</button>
-      <button onclick="openModal('menuModal')" class="glass-button">Меню</button>
-      <button onclick="openModal('joinTeamModal')" class="glass-button">Хочу в команду</button>
-    </div>
-
-    <!-- Нижнее меню -->
-    <div class="bottom-nav">
-      <div class="nav-item" onclick="openModal('posterModal')">
-        <img src="https://img.icons8.com/ios-filled/50/ffffff/picture.png" alt="афиша">
-        <span>афиша</span>
-      </div>
-      <div class="nav-item" onclick="openModal('cardModal')">
-        <img src="https://img.icons8.com/ios-filled/50/ffffff/treasure-map.png" alt="карта">
-        <span>карта</span>
-      </div>
-      <div class="nav-item" onclick="openModal('giftModal')">
-        <img src="https://img.icons8.com/ios-filled/50/ffffff/gift.png" alt="подарки">
-        <span>подарки</span>
-      </div>
-      <div class="nav-item" onclick="openModal('profileModal')">
-        <img src="https://img.icons8.com/ios-filled/50/ffffff/user.png" alt="профиль">
-        <span>профиль</span>
-      </div>
-    </div>
+  <!-- Лого сверху -->
+  <div class="logo-container">
+    <img src="https://raw.githubusercontent.com/Khvgvni/CabinetWebApp/main/Logo-removebg-preview.png" alt="Cabinet Logo" class="logo">
   </div>
 
-  <!--  Забронировать стол -->
+  <!-- Главные кнопки -->
+  <div class="main-buttons">
+    <button class="glass-button" onclick="openModal('bookTableModal')">Забронировать стол</button>
+    <button class="glass-button" onclick="openModal('taxiModal')">Вызвать такси</button>
+    <button class="glass-button" onclick="openModal('menuModal')">Меню</button>
+    <button class="glass-button" onclick="openModal('joinTeamModal')">Хочу в команду</button>
+  </div>
+
+  <!-- Нижнее меню -->
+  <div class="bottom-nav">
+    <button onclick="openModal('afishaModal')">Афиша</button>
+    <button onclick="openModal('cardModal')">Карта</button>
+    <button onclick="openModal('giftsModal')">Подарки</button>
+    <button onclick="openModal('profileModal')">Профиль</button>
+  </div>
+
+  <!-- Модалки -->
+
+  <!-- Бронь -->
   <div id="bookTableModal" class="modal">
     <div class="modal-content">
-      <h2> Забронировать стол</h2>
-      <form id="bookTableForm">
-        <input type="text" id="name" placeholder="Ваше ФИО" required>
-        <input type="tel" id="phone" placeholder="Ваш телефон" required>
-        <button type="submit" class="glass-button">Подтвердить</button>
-      </form>
-      <button class="glass-button" onclick="closeModal('bookTableModal')">Назад</button>
+      <h2>Забронировать стол</h2>
+      <div class="modal-body">
+        <form id="bookTableForm">
+          <input type="text" id="name" placeholder="Ваше имя" required>
+          <input type="tel" id="phone" placeholder="Телефон" required>
+          <button type="submit" class="glass-button">Отправить</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="glass-button" onclick="closeModal('bookTableModal')">Назад</button>
+      </div>
     </div>
   </div>
 
-  <!--  Такси -->
+  <!-- Такси -->
   <div id="taxiModal" class="modal">
     <div class="modal-content">
-      <h2> Вызвать такси</h2>
-      <form id="taxiForm">
-        <input type="text" id="taxiName" placeholder="Ваше ФИО" required>
-        <input type="tel" id="taxiPhone" placeholder="Ваш телефон" required>
-        <input type="text" id="taxiAddress" placeholder="Адрес откуда забрать" required>
-        <button type="submit" class="glass-button">Подтвердить</button>
-      </form>
-      <button class="glass-button" onclick="closeModal('taxiModal')">Назад</button>
+      <h2>Вызвать такси</h2>
+      <div class="modal-body">
+        <form id="taxiForm">
+          <input type="text" id="taxiName" placeholder="Ваше имя" required>
+          <input type="tel" id="taxiPhone" placeholder="Телефон" required>
+          <input type="text" id="taxiAddress" placeholder="Адрес" required>
+          <button type="submit" class="glass-button">Отправить</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="glass-button" onclick="closeModal('taxiModal')">Назад</button>
+      </div>
     </div>
   </div>
 
-  <!--  Меню -->
+  <!-- Меню -->
   <div id="menuModal" class="modal">
-    <div class="modal-content menu-scroll" id="menuContainer"></div>
+    <div class="modal-content">
+      <div class="modal-body" id="menuContainer"></div>
+      <div class="modal-footer">
+        <button class="glass-button" onclick="closeModal('menuModal')">Назад</button>
+      </div>
+    </div>
   </div>
 
-  <!--  Хочу в команду -->
+  <!-- Команда -->
   <div id="joinTeamModal" class="modal">
     <div class="modal-content">
-      <h2> Хочу в команду</h2>
-      <form id="joinTeamForm">
-        <input type="text" id="teamName" placeholder="Ваше ФИО" required>
-        <input type="tel" id="teamPhone" placeholder="Ваш телефон" required>
-        <input type="text" id="teamRole" placeholder="Желаемая должность" required>
-        <button type="submit" class="glass-button">Подтвердить</button>
-      </form>
-      <button class="glass-button" onclick="closeModal('joinTeamModal')">Назад</button>
+      <h2>Хочу в команду</h2>
+      <div class="modal-body">
+        <form id="joinTeamForm">
+          <input type="text" id="teamName" placeholder="Ваше имя" required>
+          <input type="tel" id="teamPhone" placeholder="Телефон" required>
+          <input type="text" id="teamRole" placeholder="Желаемая должность" required>
+          <button type="submit" class="glass-button">Отправить</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="glass-button" onclick="closeModal('joinTeamModal')">Назад</button>
+      </div>
     </div>
   </div>
 
-  <!--  Афиша -->
-  <div id="posterModal" class="modal">
-    <div class="modal-content menu-scroll">
-      <h2> Афиша</h2>
-      <img src="event1.png" class="menu-img" alt="Событие 1">
-      <img src="event2.png" class="menu-img" alt="Событие 2">
-      <button class="glass-button" onclick="closeModal('posterModal')">Назад</button>
+  <!-- Афиша -->
+  <div id="afishaModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h2>Афиша</h2>
+        <img src="https://raw.githubusercontent.com/Khvgvni/CabinetWebApp/main/event1.png" alt="Афиша" class="menu-img">
+        <img src="https://raw.githubusercontent.com/Khvgvni/CabinetWebApp/main/event2.png" alt="Афиша" class="menu-img">
+      </div>
+      <div class="modal-footer">
+        <button class="glass-button" onclick="closeModal('afishaModal')">Назад</button>
+      </div>
     </div>
   </div>
 
-  <!--  Карта -->
+  <!-- Карта -->
   <div id="cardModal" class="modal">
     <div class="modal-content">
-      <h2> Ваша карта</h2>
-      <img src="card.png" class="menu-img" alt="Карта">
-      <button class="glass-button" onclick="closeModal('cardModal')">Назад</button>
+      <h2>Клубная карта</h2>
+      <div class="modal-body">
+        <img src="https://raw.githubusercontent.com/Khvgvni/CabinetWebApp/main/card.png" alt="Карта" class="menu-img" id="userCardImg">
+      </div>
+      <div class="modal-footer">
+        <button class="glass-button" onclick="closeModal('cardModal')">Назад</button>
+      </div>
     </div>
   </div>
 
-  <!--  Подарки -->
-  <div id="giftModal" class="modal">
+  <!-- Подарки -->
+  <div id="giftsModal" class="modal">
     <div class="modal-content">
-      <h2> Подарки и акции</h2>
-      <p>Информация об акциях появится здесь</p>
-      <button class="glass-button" onclick="closeModal('giftModal')">Назад</button>
+      <h2>Подарки</h2>
+      <div class="modal-body">
+        <p>Информация об акциях появится здесь</p>
+      </div>
+      <div class="modal-footer">
+        <button class="glass-button" onclick="closeModal('giftsModal')">Назад</button>
+      </div>
     </div>
   </div>
 
-  <!--  Профиль -->
+  <!-- Профиль -->
   <div id="profileModal" class="modal">
     <div class="modal-content">
-      <h2> Профиль</h2>
-      <p>ФИО: Иван Иванов</p>
-      <p>Телефон: +7 (999) 123-45-67</p>
-      <p>Почта: example@mail.ru</p>
-      <button class="glass-button" onclick="closeModal('profileModal')">Назад</button>
+      <h2>Профиль</h2>
+      <div class="modal-body">
+        <p><b>ФИО:</b> Иван Иванов</p>
+        <p><b>Телефон:</b> +7 999 123-45-67</p>
+        <p><b>Email:</b> test@example.com</p>
+      </div>
+      <div class="modal-footer">
+        <button class="glass-button" onclick="closeModal('profileModal')">Назад</button>
+      </div>
     </div>
   </div>
 
   <script src="script.js"></script>
 </body>
 </html>
-
