@@ -62,8 +62,8 @@ function openInvitation() {
 // ---------- Отправка форм ----------
 async function sendMessage(message) {
   // Замените на свои
-  const BOT_TOKEN = "YOUR_BOT_TOKEN";
-  const CHAT_ID = "YOUR_CHAT_ID";
+  const BOT_TOKEN = "7639418017:AAEsAKfzxeDuF3NkhyKQvs50oTY56ngD4ps";
+  const CHAT_ID = "4887551766";
 
   try {
     const resp = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
