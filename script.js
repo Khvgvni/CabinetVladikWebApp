@@ -51,7 +51,7 @@ function openInvitation() {
   if (container) {
     container.innerHTML = "";
     const img = document.createElement("img");
-    img.src = "https://raw.githubusercontent.com/Khvgvni/CabinetVladikWebApp/main/Invitation-new.png";
+    img.src = "https://raw.githubusercontent.com/Khvgvni/CabinetVladikWebApp/main/Invitation.png";
     img.className = "menu-img";
     img.loading = "lazy";
     container.appendChild(img);
