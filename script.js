@@ -31,14 +31,25 @@ document.addEventListener("DOMContentLoaded", renderMenu);
 
 // ---------- Пригласительный ----------
 function openInvitation() {
+  const modal = document.getElementById("invitationModal");
   const container = document.getElementById("invitationContainer");
-  container.innerHTML = ""; // очищаем, чтобы каждый раз загружалось заново
+
+  // очищаем контейнер
+  container.innerHTML = "";
+
+  // создаём картинку
   const img = document.createElement("img");
   img.src = "https://raw.githubusercontent.com/Khvgvni/CabinetWebApp/main/Invitation-new.png";
   img.className = "menu-img";
   container.appendChild(img);
-  document.getElementById("invitationModal").style.display = "flex";
+
+  // сбрасываем модалку (чтобы заново проигралась анимация)
+  modal.style.display = "none";
+  setTimeout(() => {
+    modal.style.display = "flex";
+  }, 50); // небольшой таймаут, чтобы браузер понял переключение
 }
+
 
 // ---------- Отправка форм ----------
 async function sendMessage(message) {
