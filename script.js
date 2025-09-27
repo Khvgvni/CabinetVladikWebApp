@@ -50,7 +50,6 @@ function openInvitation() {
   }, 50); // небольшой таймаут, чтобы браузер понял переключение
 }
 
-
 // ---------- Отправка форм ----------
 async function sendMessage(message) {
   const BOT_TOKEN = "7639418017:AAEsAKfzxeDuF3NkhyKQvs50oTY56ngD4ps";   // замени на свой
