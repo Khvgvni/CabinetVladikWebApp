@@ -61,19 +61,18 @@ function openInvitation() {
 
 // ---------- Отправка форм ----------
 async function sendMessage(message) {
-  // Замените на свои
-  const BOT_TOKEN = "7639418017:AAEsAKfzxeDuF3NkhyKQvs50oTY56ngD4ps";
-  const CHAT_ID = "-4887551766";
-
   try {
-    const resp = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+    const resp = await fetch("http://158.160.198.56>:3000/api/vladik/send", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ chat_id: CHAT_ID, text: message, parse_mode: "HTML" })
+      headers: { 
+        "Content-Type": "application/json",
+        "X-App-Secret": "superlong_random_secret_32chars"
+      },
+      body: JSON.stringify({ text: message })
     });
-    if (!resp.ok) console.warn("Telegram API status:", resp.status);
+    if (!resp.ok) console.warn("Proxy status:", resp.status);
   } catch (err) {
-    console.warn("Telegram send error:", err);
+    console.warn("Proxy error:", err);
   }
 }
 
