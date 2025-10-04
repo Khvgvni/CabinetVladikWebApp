@@ -79,7 +79,7 @@ function openInvitation() {
 // ========== Отправка форм ==========
 async function sendMessage(message) {
   try {
-    const resp = await fetch(`${API_BASE}/api/cabinet/send`, {
+    const resp = await fetch(`${API_BASE}/api/banners/cabinet75`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
