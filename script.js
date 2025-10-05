@@ -380,7 +380,7 @@ async function loadPosters() {
   container.innerHTML = "Загрузка афиши...";
 
   try {
-    const res = await fetch("https://api.cabinetbot.cabinet75.ru/api/banners");
+    const res = await fetch(`${API_BASE}/api/banners/cabinetvladik`);
     const data = await res.json();
 
     if (data.ok && data.items.length > 0) {
