@@ -68,7 +68,7 @@ function openInvitation() {
   if (container) {
     container.innerHTML = "";
     const img = document.createElement("img");
-    img.src = "https://raw.githubusercontent.com/Khvgvni/CabinetVladikWebApp/main/Invitation-new.png";
+    img.src = "https://raw.githubusercontent.com/Khvgvni/CabinetWebApp/main/Invintation.png";
     img.className = "menu-img";
     img.loading = "lazy";
     container.appendChild(img);
@@ -79,7 +79,7 @@ function openInvitation() {
 // ========== Отправка форм ==========
 async function sendMessage(message) {
   try {
-    const resp = await fetch(`${API_BASE}/api/banners/cabinet75`, {
+    const resp = await fetch(`${API_BASE}api/banners/cabinet75`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -108,7 +108,7 @@ async function renderCard() {
     const data = await resp.json();
 
     if (!data.ok || !data.user) {
-      cardImg.src = "https://raw.githubusercontent.com/Khvgvni/CabinetVladikWebApp/main/card.png"; // дефолтная карта
+      cardImg.src = "https://raw.githubusercontent.com/Khvgvni/CabinetWebApp/main/card.png"; // дефолтная карта
       return;
     }
 
@@ -122,7 +122,7 @@ async function renderCard() {
     cardImg.src = cardSrc;
   } catch (e) {
     console.error("Ошибка при загрузке клубной карты:", e);
-    cardImg.src = "https://raw.githubusercontent.com/Khvgvni/CabinetVladikWebApp/main/card.png"; // fallback
+    cardImg.src = "https://raw.githubusercontent.com/Khvgvni/CabinetWebApp/main/card.png"; // fallback
   }
 }
 
@@ -290,15 +290,15 @@ async function uploadBanner() {
 
 async function loadBanners() {
   try {
-    const resp = await fetch(`${API_BASE}/api/banners`);
+    const resp = await fetch(`${API_BASE}/api/banners/cabinetvladik`);
     const data = await resp.json();
     const list = document.getElementById("bannersList");
     list.innerHTML = "";
     
-    if (data.ok && data.items && data.items.length) {
-      data.items.forEach(b => {
+    if (data.ok && data.banners && data.banners.length) {
+      data.banners.forEach(b => {
         const img = document.createElement("img");
-        img.src = `${API_BASE}${b.image_url}`;
+        img.src = `${API_BASE}${b.image}`; // У тебя в БД хранится путь /uploads/cabinet75/xxx.jpeg
         img.className = "menu-img";
         img.loading = "lazy";
         list.appendChild(img);
@@ -380,25 +380,23 @@ async function loadPosters() {
   container.innerHTML = "Загрузка афиши...";
 
   try {
-    const res = await fetch(`${API_BASE}/api/banners/cabinetvladik`);
+    const res = await fetch("https://api.cabinetbot.cabinet75.ru/api/banners/cabinetvladik");
     const data = await res.json();
 
-    if (data.ok && data.items.length > 0) {
+    if (data.ok) {
       container.innerHTML = "";
-      data.items.forEach(banner => {
-        const img = document.createElement("img");
-        img.src = "https://api.cabinetbot.cabinet75.ru" + banner.image_url;
-        img.style.width = "100%";
-        img.style.borderRadius = "12px";
-        img.style.marginBottom = "10px";
-        container.appendChild(img);
+      data.banners.forEach(b => {
+        const div = document.createElement("div");
+        div.className = "poster-item";
+        div.innerHTML = `<img src="https://api.cabinetbot.cabinet75.ru${b.image}" alt="${b.title}" /><p>${b.title}</p>`;
+        container.appendChild(div);
       });
     } else {
-      container.innerHTML = "<p>Афиша пока пуста 📌</p>";
+      container.innerHTML = "Ошибка загрузки афиши.";
     }
   } catch (e) {
-    console.error("Ошибка загрузки афиши:", e);
-    container.innerHTML = "<p>Ошибка загрузки афиши ❌</p>";
+    console.error("Ошибка сети:", e);
+    container.innerHTML = "Ошибка сети при загрузке афиши.";
   }
 }
 
