@@ -262,71 +262,46 @@ async function adminLogin() {
   }
 }
 
-// --- Афиши ---
-async function uploadBanner() {
-  const fileInput = document.getElementById("bannerFile");
-  const f = fileInput.files[0];
-  if (!f) return alert("Выберите файл");
-  
-  const fd = new FormData();
-  fd.append("image", f);
-  
+// === Загрузка афиш CabinetVladik ===
+async function loadBannersVladik() {
   try {
-    const resp = await fetch(`${API_BASE}/api/admin/banners/cabinetvladik`, {
-      method: "POST",
-      headers: { "Authorization": `Bearer ${adminToken()}` },
-      body: fd
-    });
+    const resp = await fetch(`${API_BASE}/api/banners/cabinetvladik`);
     const data = await resp.json();
-    if (!data.ok) return alert(data.error || "Ошибка загрузки");
+    const list = document.getElementById("bannersList");
+    list.innerHTML = "";
     
-    alert("Афиша загружена!");
-    fileInput.value = ""; // Очищаем input
-    loadBanners();
-  } catch (error) {
-    alert("Ошибка сети: " + error.message);
-  }
-}
-
-// === Удаление афиши ===
-async function deleteBanner(id) {
-  if (!confirm("Удалить афишу?")) return;
-  try {
-    const resp = await fetch(`${API_BASE}/api/admin/banners/cabinetvladik/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Authorization": "Bearer " + localStorage.getItem("token") // если нужна авторизация
-      }
-    });
-
-    const data = await resp.json();
-    if (data.ok) {
-      alert("Афиша удалена!");
-      loadBanners(); // обновляем список
+    if (data.ok && data.banners && data.banners.length) {
+      data.banners.forEach(b => {
+        const div = document.createElement("div");
+        div.className = "poster-item";
+        div.innerHTML = `
+          <img src="${API_BASE}${b.image}" class="menu-img" loading="lazy"/>
+          <button onclick="deleteBannerVladik(${b.id})" class="delete-btn">Удалить</button>
+        `;
+        list.appendChild(div);
+      });
     } else {
-      alert("Ошибка: " + data.error);
+      list.innerHTML = "<p>Нет афиш</p>";
     }
-  } catch (e) {
-    alert("Ошибка сети: " + e.message);
+  } catch (error) {
+    console.error("Ошибка загрузки афиш:", error);
+    document.getElementById("bannersList").innerHTML = "<p>Ошибка сети</p>";
   }
 }
 
-// === новая функция ===
-async function deleteBanner(id) {
+// === Удаление афиши CabinetVladik ===
+async function deleteBannerVladik(id) {
   if (!confirm("Удалить афишу?")) return;
-
   try {
     const resp = await fetch(`${API_BASE}/api/admin/banners/cabinetvladik/${id}`, {
       method: "DELETE",
       headers: { "Authorization": `Bearer ${adminToken()}` }
     });
     const data = await resp.json();
-    if (!data.ok) return alert(data.error || "Ошибка при удалении");
-
-    alert("Афиша удалена!");
-    loadBanners(); // обновляем список
-  } catch (e) {
-    alert("Ошибка сети: " + e.message);
+    if (!data.ok) return alert(data.error || "Ошибка удаления");
+    loadBannersVladik();
+  } catch (error) {
+    alert("Ошибка сети: " + error.message);
   }
 }
 
