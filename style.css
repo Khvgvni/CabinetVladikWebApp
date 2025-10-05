@@ -283,7 +283,6 @@ textarea{ resize: vertical; min-height: 112px; }
 .banner-item button:hover {
   background: #c0392b;
 }
-
 /* Lists / Cards */
 #bannersList img, #postsList img {
   max-width: 100%;
