@@ -272,7 +272,7 @@ async function uploadBanner() {
   fd.append("image", f);
   
   try {
-    const resp = await fetch(`${API_BASE}/api/admin/banners`, {
+    const resp = await fetch(`${API_BASE}api/banners/cabinetvladik, {
       method: "POST",
       headers: { "Authorization": `Bearer ${adminToken()}` },
       body: fd
