@@ -288,37 +288,26 @@ async function uploadBanner() {
   }
 }
 
-async function loadBanners() {
+// === Удаление афиши ===
+async function deleteBanner(id) {
+  if (!confirm("Удалить афишу?")) return;
   try {
-    const resp = await fetch(`${API_BASE}/api/banners/cabinetvladik`);
+    const resp = await fetch(`${API_BASE}/api/admin/banners/cabinetvladik/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("token") // если нужна авторизация
+      }
+    });
+
     const data = await resp.json();
-    const list = document.getElementById("bannersList");
-    list.innerHTML = "";
-    
-    if (data.ok && data.banners && data.banners.length) {
-      data.banners.forEach(b => {
-        const div = document.createElement("div");
-        div.className = "banner-item";
-        
-        const img = document.createElement("img");
-        img.src = `${API_BASE}${b.image}`;
-        img.className = "menu-img";
-        img.loading = "lazy";
-        
-        const delBtn = document.createElement("button");
-        delBtn.textContent = "❌ Удалить";
-        delBtn.onclick = () => deleteBanner(b.id);
-        
-        div.appendChild(img);
-        div.appendChild(delBtn);
-        list.appendChild(div);
-      });
+    if (data.ok) {
+      alert("Афиша удалена!");
+      loadBanners(); // обновляем список
     } else {
-      list.innerHTML = "<p>Нет афиш</p>";
+      alert("Ошибка: " + data.error);
     }
-  } catch (error) {
-    console.error("Ошибка загрузки афиш:", error);
-    document.getElementById("bannersList").innerHTML = "<p>Ошибка загрузки</p>";
+  } catch (e) {
+    alert("Ошибка сети: " + e.message);
   }
 }
 
@@ -327,7 +316,7 @@ async function deleteBanner(id) {
   if (!confirm("Удалить афишу?")) return;
 
   try {
-    const resp = await fetch(`${API_BASE}/api/admin/banners/cabinet75/${id}`, {
+    const resp = await fetch(`${API_BASE}/api/admin/banners/cabinetvladik/${id}`, {
       method: "DELETE",
       headers: { "Authorization": `Bearer ${adminToken()}` }
     });
