@@ -227,16 +227,24 @@ setTimeout(() => {
   }
 }, 4000);
 
-// ========== Админка ==========
 function openTab(id) {
   document.querySelectorAll(".tab-content").forEach(el => el.style.display = "none");
   document.querySelectorAll(".tab-btn").forEach(el => el.classList.remove("active"));
   document.getElementById(id).style.display = "block";
   const activeBtn = document.querySelector(`.tab-btn[onclick="openTab('${id}')"]`);
   if (activeBtn) activeBtn.classList.add("active");
+
+  if (id === "bannersTab") {
+    if (typeof loadBanners === "function") {
+      loadBanners(); // Cabinet75
+    } else if (typeof loadBannersVladik === "function") {
+      loadBannersVladik(); // CabinetVladik
+    }
+  }
   
-  if (id === "bannersTab") loadBanners();
-  if (id === "usersTab") loadUsers();
+  if (id === "usersTab" && typeof loadUsers === "function") {
+    loadUsers();
+  }
 }
 
 // --- Логин админа ---
