@@ -164,40 +164,64 @@ async function loadProfile() {
 window.addEventListener("DOMContentLoaded", () => {
   renderMenu();
 
-  // Бронь стола
-  const bookForm = document.getElementById("bookTableForm");
-  if (bookForm) bookForm.addEventListener("submit", async e => {
-    e.preventDefault();
-    const name = document.getElementById("name")?.value || "";
-    const phone = document.getElementById("phone")?.value || "";
-    await sendMessage(`Бронь стола:\nФИО: ${name}\nТелефон: ${phone}`);
-    alert("✅ Ваша заявка принята!");
-    closeModal("bookTableModal");
-  });
+  // Определяем имя приложения (по урлу)
+const APP_NAME = window.location.href.includes("CabinetVladikWebApp") ? "cabinetvladik" : "cabinet75";
 
-  // Такси
-  const taxiForm = document.getElementById("taxiForm");
-  if (taxiForm) taxiForm.addEventListener("submit", async e => {
-    e.preventDefault();
-    const name = document.getElementById("taxiName")?.value || "";
-    const phone = document.getElementById("taxiPhone")?.value || "";
-    const address = document.getElementById("taxiAddress")?.value || "";
-    await sendMessage(`Такси:\nФИО: ${name}\nТелефон: ${phone}\nАдрес: ${address}`);
-    alert("✅ Заявка на такси принята!");
-    closeModal("taxiModal");
-  });
+// Универсальная функция для отправки заявок
+async function sendToServer(endpoint, payload) {
+  try {
+    const resp = await fetch(`${API_BASE}${endpoint}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...payload, appName: APP_NAME }) // <<< сюда подставляем appName
+    });
+    const data = await resp.json();
+    if (!data.ok) throw new Error(data.error || "Ошибка запроса");
+    return data;
+  } catch (err) {
+    console.error("Ошибка при отправке:", err.message);
+    alert("❌ Ошибка при отправке. Попробуйте позже.");
+  }
+}
 
-  // Команда
-  const teamForm = document.getElementById("joinTeamForm");
-  if (teamForm) teamForm.addEventListener("submit", async e => {
-    e.preventDefault();
-    const name = document.getElementById("teamName")?.value || "";
-    const phone = document.getElementById("teamPhone")?.value || "";
-    const role = document.getElementById("teamRole")?.value || "";
-    await sendMessage(`Заявка в команду:\nФИО: ${name}\nТелефон: ${phone}\nДолжность: ${role}`);
-    alert("✅ Администратор свяжется с вами в течение недели!");
-    closeModal("joinTeamModal");
-  });
+// ==== Бронь стола ====
+const bookForm = document.getElementById("bookTableForm");
+if (bookForm) bookForm.addEventListener("submit", async e => {
+  e.preventDefault();
+  const name = document.getElementById("name")?.value || "";
+  const phone = document.getElementById("phone")?.value || "";
+  const guests = document.getElementById("guests")?.value || 1;
+
+  await sendToServer("/api/book/table", { name, phone, guests });
+  alert("✅ Ваша заявка на бронь принята!");
+  closeModal("bookTableModal");
+});
+
+// ==== Такси ====
+const taxiForm = document.getElementById("taxiForm");
+if (taxiForm) taxiForm.addEventListener("submit", async e => {
+  e.preventDefault();
+  const name = document.getElementById("taxiName")?.value || "";
+  const phone = document.getElementById("taxiPhone")?.value || "";
+  const address = document.getElementById("taxiAddress")?.value || "";
+
+  await sendToServer("/api/book/taxi", { name, phone, address });
+  alert("✅ Заявка на такси принята!");
+  closeModal("taxiModal");
+});
+
+// ==== Команда ====
+const teamForm = document.getElementById("joinTeamForm");
+if (teamForm) teamForm.addEventListener("submit", async e => {
+  e.preventDefault();
+  const name = document.getElementById("teamName")?.value || "";
+  const phone = document.getElementById("teamPhone")?.value || "";
+  const role = document.getElementById("teamRole")?.value || "";
+
+  await sendToServer("/api/book/team", { name, phone, role });
+  alert("✅ Администратор свяжется с вами в течение недели!");
+  closeModal("joinTeamModal");
+});
 
   // Инициализация Telegram Web App
   const tg = window.Telegram?.WebApp;
