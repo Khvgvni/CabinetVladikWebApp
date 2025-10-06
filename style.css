@@ -294,30 +294,6 @@ textarea{ resize: vertical; min-height: 112px; }
   padding: 12px;
   margin-bottom: 10px;
 }
-
-/* ===== Афиши (в модальном окне) ===== */
-#posterContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;                /* отступы между афишами */
-  width: 100%;
-  overflow-y: auto;         /* вертикальная прокрутка */
-  max-height: 70vh;         /* ограничение по высоте окна */
-  padding-right: 6px;       /* чтобы скролл не наезжал на картинку */
-}
-
-#posterContainer img {
-  width: 100%;              /* занимает всю ширину контейнера */
-  max-width: 500px;         /* чтобы не были слишком огромные */
-  height: auto;             /* сохраняем пропорции */
-  margin: 0 auto;           /* центрируем */
-  border-radius: 14px;      /* скругляем */
-  object-fit: contain;      /* вписываем картинку внутрь */
-  border: 1px solid rgba(255,255,255,0.12);
-  background: rgba(255,255,255,0.04);
-  box-shadow: var(--shadow);
-}
-
 /* Приоритет модальных окон */
 #adminModal {
   z-index: 11000 !important; /* админка всегда сверху */
@@ -405,4 +381,27 @@ textarea{ resize: vertical; min-height: 112px; }
 .back-btn:hover {
   background: linear-gradient(90deg, var(--accent-2), var(--accent));
   transform: translateY(-2px);
+}
+
+/* ===== Афиши (в модальном окне) ===== */
+#posterContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;                /* отступы между афишами */
+  width: 100%;
+  overflow-y: auto;         /* вертикальная прокрутка */
+  max-height: 70vh;         /* ограничение по высоте окна */
+  padding-right: 6px;       /* чтобы скролл не наезжал на картинку */
+}
+
+#posterContainer img {
+  width: 100%;              /* занимает всю ширину контейнера */
+  max-width: 500px;         /* чтобы не были слишком огромные */
+  height: auto;             /* сохраняем пропорции */
+  margin: 0 auto;           /* центрируем */
+  border-radius: 14px;      /* скругляем */
+  object-fit: contain;      /* вписываем картинку внутрь */
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.04);
+  box-shadow: var(--shadow);
 }
