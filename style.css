@@ -216,17 +216,15 @@ textarea{ resize: vertical; min-height: 112px; }
   gap:12px;
   width:100%;
 }
-.menu-img{
+.menu-img {
   width: 100%;
+  max-width: 100%;
   height: auto;
-  max-height: 80vh;
-  object-fit: contain;
+  max-height: 70vh; /* ограничение по высоте окна */
+  object-fit: contain; /* сохраняет пропорции и вписывает */
   border-radius: 16px;
   border: 1px solid rgba(255,255,255,.12);
   background: rgba(255,255,255,.04);
-}
-@media (min-width: 768px){
-  .menu-img{ border-radius: 18px; }
 }
 
 /* ===== Admin Tabs ===== */
