@@ -294,6 +294,32 @@ async function adminLogin() {
   }
 }
 
+// --- Афиши ---
+async function uploadBanner() {
+  const fileInput = document.getElementById("bannerFile");
+  const f = fileInput.files[0];
+  if (!f) return alert("Выберите файл");
+  
+  const fd = new FormData();
+  fd.append("image", f);
+  
+  try {
+    const resp = await fetch(`${API_BASE}/api/admin/banners/cabinetvladik`, {
+      method: "POST",
+      headers: { "Authorization": `Bearer ${adminToken()}` },
+      body: fd
+    });
+    const data = await resp.json();
+    if (!data.ok) return alert(data.error || "Ошибка загрузки");
+    
+    alert("Афиша загружена!");
+    fileInput.value = ""; // Очищаем input
+    loadBanners();
+  } catch (error) {
+    alert("Ошибка сети: " + error.message);
+  }
+}
+
 // === Загрузка афиш CabinetVladik ===
 async function loadBannersVladik() {
   try {
